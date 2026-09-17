@@ -94,11 +94,11 @@ El carrito usa la clave `purple-cart-usd` para evitar recuperar importes antiguo
 
 ## Publicación y entrega
 
-La carpeta `bts-shop` tiene su propio repositorio Git independiente, en la rama `codex/bts-shop`. Trabaja desde esta carpeta para que Git no tome como raíz el directorio personal. El repositorio todavía no tiene un remoto configurado; al publicarlo, conecta un repositorio nuevo y vacío dedicado a esta tienda.
+La carpeta `bts-shop` tiene su propio repositorio Git independiente, en la rama `codex/bts-shop`. Trabaja desde esta carpeta para que Git no tome como raíz el directorio personal. Repositorio de entrega: https://github.com/AlexUrdiozola/entrega-final-tiendabts.
 
 Se incluye `firebase.json` con reescritura SPA para que funcionen enlaces directos al detalle, carrito y categorías en Firebase Hosting. Tras configurar tu cuenta puedes compilar y publicar con Firebase CLI. Para otro hosting, configura todas las rutas para servir `index.html`.
 
-Para entregar en GitHub, crea un repositorio público, sube el código incluyendo `package-lock.json` y excluye `.env.local`, credenciales, `node_modules` y `dist`. Comprueba la visibilidad pública en una ventana privada. El repositorio y el sitio todavía no están publicados; la base de datos Firebase sí está configurada.
+El repositorio de entrega es público e incluye `package-lock.json`; `.env.local`, credenciales, `node_modules` y `dist` están excluidos de Git. Después de clonar, copia `.env.example` a `.env.local` y completa la configuración web de Firebase entregada por separado. El sitio todavía no está publicado en Hosting; la base de datos Firebase sí está configurada.
 
 ## Pruebas
 

@@ -14,6 +14,6 @@ Actualizado el 17 de septiembre de 2026.
 - El 17 de septiembre se ejecutó `createOrder`, el mismo servicio utilizado por el checkout, mediante el cargador SSR de Vite. Firebase confirmó la escritura de la orden `yd2EAWVjpwUTgJ6F5PFQ`: un Proof por USD 39,27, con datos de comprador ficticios. No se procesó ningún pago.
 - La lectura REST sin autenticar de esa orden devolvió HTTP 403, según las reglas de privacidad. El registro de la verificación se incluye en `firebase-verification.json`.
 - La comprobación del 17 de septiembre se realizó sobre los servicios reales de la aplicación; no se repitió el recorrido visual completo del navegador con Firebase.
-- Pendiente: publicar y comprobar el repositorio público en la cuenta del alumno.
+- Repositorio de entrega: https://github.com/AlexUrdiozola/entrega-final-tiendabts (público).
 
-La conexión a Firebase está activa y verificada. El sitio sigue siendo local; no se publicó en Hosting ni se creó un repositorio público. Las órdenes académicas no reservan ni descuentan stock en la nube, como se explica en README.md.
+La conexión a Firebase está activa y verificada. El sitio sigue siendo local; no se publicó en Hosting. Las órdenes académicas no reservan ni descuentan stock en la nube, como se explica en README.md.
