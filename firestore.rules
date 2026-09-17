@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+ match /databases/{database}/documents {
+  match /products/{id} { allow read: if true; allow write: if false; }
+  function validItem(item) {
+   let product = get(/databases/$(database)/documents/products/$(item.id)).data;
+   return item.keys().hasOnly(['id','name','quantity','price']) && item.quantity is int && item.quantity > 0 && item.quantity <= product.stock && item.price == product.price && item.name == product.name;
+  }
+  function validAt(items, index) { return items.size() <= index || validItem(items[index]); }
+  function subtotal(items,index) { return items.size() > index ? items[index].quantity * items[index].price : 0; }
+  match /orders/{id} {
+   allow read, update, delete: if false;
+   allow create: if request.auth != null
+    && request.resource.data.keys().hasOnly(['uid','buyer','items','total','currency','createdAt','status'])
+    && request.resource.data.uid == request.auth.uid
+    && request.resource.data.createdAt == request.time
+    && request.resource.data.currency == 'USD'
+    && request.resource.data.status == 'received'
+    && request.resource.data.buyer.keys().hasOnly(['name','email','phone'])
+    && request.resource.data.buyer.name is string && request.resource.data.buyer.name.size() >= 2 && request.resource.data.buyer.name.size() <= 100
+    && request.resource.data.buyer.email is string && request.resource.data.buyer.email.size() <= 150 && request.resource.data.buyer.email.matches('.*@.*[.].*')
+    && request.resource.data.buyer.phone is string && request.resource.data.buyer.phone.size() >= 6 && request.resource.data.buyer.phone.size() <= 25
+    && request.resource.data.items is list && request.resource.data.items.size() >= 1 && request.resource.data.items.size() <= 10
+    && validAt(request.resource.data.items,0) && validAt(request.resource.data.items,1) && validAt(request.resource.data.items,2) && validAt(request.resource.data.items,3) && validAt(request.resource.data.items,4)
+    && validAt(request.resource.data.items,5) && validAt(request.resource.data.items,6) && validAt(request.resource.data.items,7) && validAt(request.resource.data.items,8) && validAt(request.resource.data.items,9)
+    && request.resource.data.total == subtotal(request.resource.data.items,0)+subtotal(request.resource.data.items,1)+subtotal(request.resource.data.items,2)+subtotal(request.resource.data.items,3)+subtotal(request.resource.data.items,4)+subtotal(request.resource.data.items,5)+subtotal(request.resource.data.items,6)+subtotal(request.resource.data.items,7)+subtotal(request.resource.data.items,8)+subtotal(request.resource.data.items,9);
+  }
+ }
+}
