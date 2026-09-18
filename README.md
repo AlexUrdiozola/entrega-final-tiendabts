@@ -2,7 +2,7 @@
 
 Aplicación de e-commerce desarrollada con React JS para el proyecto final del curso de Coderhouse. Está dirigida a fans de BTS y permite explorar álbumes, light sticks y productos coleccionables, gestionar un carrito y registrar órdenes de compra en Firebase Firestore.
 
-## 🚀 Deploy
+##  Deploy
 
 Aplicación publicada en **[GitHub Pages](https://alexurdiozola.github.io/entrega-final-tiendabts/)**.
 
@@ -10,7 +10,7 @@ La navegación usa `HashRouter` para permitir enlaces directos y recargas en Git
 
 Para preparar una actualización de la publicación, compilar con `DEPLOY_BASE_PATH=/entrega-final-tiendabts/` y la configuración de Firebase en `.env.local`, y publicar el contenido de `dist` en `gh-pages`. Los cambios en la rama de código fuente no actualizan por sí solos la versión publicada.
 
-## 🛠️ Tecnologías utilizadas
+##  Tecnologías utilizadas
 
 - **React:** construcción de componentes y manejo de estado mediante hooks.
 - **Vite:** entorno de desarrollo y compilación.
@@ -21,7 +21,7 @@ Para preparar una actualización de la publicación, compilar con `DEPLOY_BASE_P
 - **Lucide React:** íconos.
 - **Vitest y React Testing Library:** pruebas automatizadas.
 
-## ✨ Funcionalidades principales
+##  Funcionalidades principales
 
 - Catálogo de productos obtenido desde Firestore.
 - Filtrado por categorías, búsqueda por nombre y ordenamiento por precio.
@@ -35,7 +35,7 @@ Para preparar una actualización de la publicación, compilar con `DEPLOY_BASE_P
 - Diseño adaptable a dispositivos móviles.
 - Precios expresados en dólares estadounidenses (USD).
 
-## 📦 Instalación y ejecución local
+##  Instalación y ejecución local
 
 ### Requisitos
 
@@ -100,7 +100,7 @@ VITE_DATA_MODE=demo
 
 Este modo utiliza productos locales y genera identificadores de compra simulados. **No guarda órdenes en Firestore.**
 
-## 🧩 Arquitectura de componentes
+##  Arquitectura de componentes
 
 ```text
 App
@@ -136,7 +136,7 @@ src/
  └── styles.css   # Estilos generales y responsive
 ```
 
-## 🔥 Firebase Firestore
+##  Firebase Firestore
 
 La aplicación utiliza dos colecciones:
 
@@ -145,7 +145,7 @@ La aplicación utiliza dos colecciones:
 
 Antes de registrar una orden se consultan nuevamente los productos para validar precios y disponibilidad. Las reglas permiten leer el catálogo y crear órdenes validadas, sin permitir la lectura pública de los datos de compradores.
 
-## 🧪 Pruebas y compilación
+##  Pruebas y compilación
 
 Ejecutar las pruebas automatizadas:
 
@@ -167,13 +167,13 @@ npm run preview
 
 Las pruebas cubren operaciones del carrito, límites de cantidad, validación de órdenes y un recorrido de compra en modo demo. No generan compras en Firebase.
 
-## 📝 Alcance del proyecto
+##  Alcance del proyecto
 
 Proyecto académico y fan, sin afiliación con BTS o Weverse. El catálogo combina referencias de Weverse con productos ficticios; el stock es ilustrativo.
 
 Las compras se registran en Firestore, pero **no se procesan pagos, envíos ni descuentos automáticos de stock en la nube**.
 
-## 👤 Autor
+##  Autor
 
 **Alex Urdiozola**  
 Proyecto Final Integrador – React JS · Coderhouse
