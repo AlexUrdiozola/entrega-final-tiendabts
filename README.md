@@ -1,107 +1,177 @@
-# Purple Shop · BTS
+# Purple Shop · BTS 💜
 
-SPA académica creada con React, Vite, React Router y Firebase/Firestore. Migra la identidad violeta y las imágenes de `bts-final` a una tienda modular. El proyecto original se conserva intacto. No procesa pagos ni envíos reales.
+Aplicación de e-commerce desarrollada con React JS para el proyecto final del curso de Coderhouse. Está dirigida a fans de BTS y permite explorar álbumes, light sticks y productos coleccionables, gestionar un carrito y registrar órdenes de compra en Firebase Firestore.
 
-## Firebase conectado
+## 🚀 Deploy
 
-La entrega está configurada para el proyecto `proyecto-reactjs-bts`, con Firestore `(default)` en `nam5`, autenticación anónima habilitada, seis productos en USD y reglas publicadas. El ZIP incluye `.env.local` con la configuración web pública; ese archivo sigue excluido de Git.
+Pendiente de publicación. La aplicación puede ejecutarse localmente siguiendo las instrucciones de instalación.
 
-El 17 de septiembre de 2026 se ejecutó el mismo servicio `createOrder` utilizado por el checkout contra Firebase real. Se guardó la orden de prueba `yd2EAWVjpwUTgJ6F5PFQ` por USD 39,27 con datos ficticios. La lectura pública de esa orden fue denegada (HTTP 403). El resultado está en `firebase-verification.json`. Puedes consultar la orden con tu cuenta desde la consola de Firestore, colección `orders`.
+## 🛠️ Tecnologías utilizadas
 
-## Iniciar
+- **React:** construcción de componentes y manejo de estado mediante hooks.
+- **Vite:** entorno de desarrollo y compilación.
+- **React Router DOM:** navegación SPA y rutas dinámicas.
+- **Firebase Firestore:** almacenamiento de productos y órdenes.
+- **Firebase Authentication:** autenticación anónima para registrar compras.
+- **CSS propio:** estilos y diseño responsive.
+- **Lucide React:** íconos.
+- **Vitest y React Testing Library:** pruebas automatizadas.
 
-Requisitos: Node.js 22.12+ (o 20.19+) y npm.
+## ✨ Funcionalidades principales
 
-```sh
-npm ci
+- Catálogo de productos obtenido desde Firestore.
+- Filtrado por categorías, búsqueda por nombre y ordenamiento por precio.
+- Detalle de producto con selector de cantidad y validación de stock.
+- Ocultamiento del selector después de agregar un producto al carrito.
+- Carrito global mediante React Context: agregar, modificar cantidades, eliminar, vaciar y calcular totales.
+- Persistencia del carrito mediante localStorage.
+- Checkout con validación de datos y confirmación del correo electrónico.
+- Registro de órdenes en Firestore y visualización del ID de compra.
+- Indicadores de carga y mensajes de error, carrito vacío y productos agotados.
+- Diseño adaptable a dispositivos móviles.
+- Precios expresados en dólares estadounidenses (USD).
+
+## 📦 Instalación y ejecución local
+
+### Requisitos
+
+- Node.js 22.12 o superior compatible con Vite.
+- npm.
+- Configuración web del proyecto Firebase, entregada por separado.
+
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/AlexUrdiozola/entrega-final-tiendabts.git
+cd entrega-final-tiendabts
+```
+
+### 2. Instalar las dependencias
+
+```bash
+npm install
+```
+
+### 3. Configurar Firebase
+
+Crear un archivo `.env.local` en la raíz del proyecto, junto a `package.json`, tomando `.env.example` como referencia.
+
+Completarlo con la configuración web proporcionada:
+
+```env
+VITE_DATA_MODE=firebase
+VITE_FIREBASE_API_KEY=tu_api_key
+VITE_FIREBASE_AUTH_DOMAIN=tu_auth_domain
+VITE_FIREBASE_PROJECT_ID=tu_project_id
+VITE_FIREBASE_STORAGE_BUCKET=tu_storage_bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=tu_messaging_sender_id
+VITE_FIREBASE_APP_ID=tu_app_id
+```
+
+El proyecto Firebase de esta entrega ya tiene Firestore, el catálogo y la autenticación anónima configurados. **No es necesario crear otra base de datos ni disponer de acceso a la consola** para ejecutar la aplicación con la configuración entregada.
+
+El archivo `.env.local` está excluido del repositorio. No se necesitan claves privadas de cuentas de servicio para ejecutar el frontend.
+
+### 4. Iniciar la aplicación
+
+```bash
 npm run dev
 ```
 
-Abrir la URL que muestra Vite (habitualmente http://127.0.0.1:5173).
+Abrir la dirección que indique la terminal, habitualmente:
 
-```sh
+[http://127.0.0.1:5173](http://127.0.0.1:5173)
+
+Mantener la terminal abierta mientras se utiliza la aplicación. Si se modifican las variables de entorno, reiniciar el servidor.
+
+> La aplicación debe iniciarse con Vite; no se ejecuta abriendo `index.html` con doble clic.
+
+### Modo demostración opcional
+
+Para explorar la interfaz sin configurar Firebase:
+
+```env
+VITE_DATA_MODE=demo
+```
+
+Este modo utiliza productos locales y genera identificadores de compra simulados. **No guarda órdenes en Firestore.**
+
+## 🧩 Arquitectura de componentes
+
+```text
+App
+ ├── NavBar
+ │    └── CartWidget
+ ├── ItemListContainer
+ │    └── ItemList
+ │         └── Item
+ ├── ItemDetailContainer
+ │    └── ItemDetail
+ │         └── ItemCount
+ ├── Cart
+ │    ├── CartItem
+ │    └── OrderSummary
+ └── CheckoutForm
+      └── OrderSummary
+```
+
+Los componentes contenedores gestionan las consultas y los estados de carga. Los componentes de presentación reciben los datos mediante props.
+
+El carrito se administra con **React Context y useReducer**. También se utilizan `useState`, `useEffect`, `useMemo` y `useRef` para gestionar la interacción, persistencia y procesamiento del checkout.
+
+### Organización del código
+
+```text
+src/
+ ├── components/   # Componentes de interfaz y contenedores
+ ├── context/      # Contexto y reducer del carrito
+ ├── data/         # Catálogo de demostración
+ ├── services/     # Configuración y operaciones de Firebase
+ ├── App.jsx      # Rutas de la aplicación
+ ├── main.jsx     # Punto de entrada
+ └── styles.css   # Estilos generales y responsive
+```
+
+## 🔥 Firebase Firestore
+
+La aplicación utiliza dos colecciones:
+
+- **`products`:** nombre, descripción, precio, stock, categoría, imagen y etiquetas del producto.
+- **`orders`:** datos del comprador, productos adquiridos, cantidades, total, moneda, identificador del usuario y fecha generada por el servidor.
+
+Antes de registrar una orden se consultan nuevamente los productos para validar precios y disponibilidad. Las reglas permiten leer el catálogo y crear órdenes validadas, sin permitir la lectura pública de los datos de compradores.
+
+## 🧪 Pruebas y compilación
+
+Ejecutar las pruebas automatizadas:
+
+```bash
 npm test
+```
+
+Generar la versión de producción:
+
+```bash
 npm run build
+```
+
+Visualizar localmente la versión compilada:
+
+```bash
 npm run preview
 ```
 
-Sin variables de entorno funciona en **modo demo**: productos locales, carrito persistente en localStorage y órdenes simuladas con prefijo `DEMO-`. Las órdenes demo no se almacenan; su stock se mantiene solo durante la sesión de la página. Los datos del comprador no se guardan localmente.
+Las pruebas cubren operaciones del carrito, límites de cantidad, validación de órdenes y un recorrido de compra en modo demo. No generan compras en Firebase.
 
-## Conectar tu primer Firebase
+## 📝 Alcance del proyecto
 
-1. En https://console.firebase.google.com crea un proyecto y registra una aplicación web (`</>`). Copia la configuración web que proporciona Firebase.
-2. Crea una base **Cloud Firestore** con ID `(default)`. Elige su región y comienza en modo producción.
-3. En **Authentication → Sign-in method**, habilita el proveedor **Anónimo**. Las compras usarán una sesión anónima, sin formulario de registro.
-4. Copia `.env.example` a `.env.local`. Completa las seis variables de configuración web y establece `VITE_DATA_MODE=firebase`.
-5. Copia el contenido de `firestore.rules` en **Firestore → Reglas** y publícalo. Las reglas permiten leer productos y crear órdenes validadas; impiden leer datos de compradores y modificar productos desde el navegador.
-6. Carga los documentos en la colección **products** con los IDs y campos de `src/data/products.js`. Puedes hacerlo desde la consola, o con el script de carga descrito abajo.
-7. Reinicia `npm run dev`. Verifica que el pie indique conexión a Firebase, abre productos y completa una compra de prueba. La pantalla mostrará el ID real; comprueba que existe el documento en **orders**.
+Proyecto académico y fan, sin afiliación con BTS o Weverse. El catálogo combina referencias de Weverse con productos ficticios; el stock es ilustrativo.
 
-### Carga inicial mediante script
+Las compras se registran en Firestore, pero **no se procesan pagos, envíos ni descuentos automáticos de stock en la nube**.
 
-En la configuración de Firebase → Cuentas de servicio, genera una clave privada y guárdala **fuera del proyecto y del repositorio**. Define `GOOGLE_APPLICATION_CREDENTIALS` en `.env.local` con la ruta absoluta a esa clave, sin prefijo `VITE_`. Ejecuta:
+## 👤 Autor
 
-```sh
-npm run seed
-```
+**Alex Urdiozola**  
+Proyecto Final Integrador – React JS · Coderhouse
 
-Usa Firebase Admin, solo en Node; la clave nunca se importa al frontend. El script crea los productos que faltan, sin sobrescribir documentos existentes. Alternativamente, carga manualmente los seis documentos desde la consola sin generar claves.
-
-La configuración web pública de Firebase no es una clave de administrador. La protección de datos depende de las reglas. `.env.local`, claves privadas y `node_modules` están excluidos de Git. No envíes claves de servicio al profesor: comparte únicamente la configuración web por el medio solicitado.
-
-### Modelo de datos
-
-- `products/{id}`: name, category, description, price (USD), stock (entero), image, badge y source o mock.
-- `orders/{id}`: uid, buyer { name, email, phone }, items [{ id, name, quantity, price }], total, currency, createdAt (timestamp del servidor), status.
-
-El checkout relee los productos en una transacción y rechaza stock insuficiente o cambios de precio. Las reglas verifican cada línea y el total. Se permiten hasta diez líneas por orden por el límite de lecturas de reglas. El catálogo inicial tiene seis productos.
-
-**Alcance académico:** las órdenes registran intención de compra; el stock en la nube no se descuenta ni se reserva. Una tienda comercial necesitaría backend confiable para reserva atómica de inventario, pagos y prevención de abuso. No se habilitan escrituras públicas sobre inventario.
-
-## Componentes y conceptos
-
-```text
-App / BrowserRouter
-├── NavBar → CartWidget
-├── ItemListContainer → ItemList → Item
-├── ItemDetailContainer → ItemDetail → ItemCount
-├── Cart → CartItem / OrderSummary
-└── CheckoutForm → OrderSummary
-```
-
-- Contenedores: carga asíncrona y errores. Presentación: recibe datos por props.
-- Context + useReducer: carrito global, cantidades, total y acciones.
-- useEffect: lectura de productos, persistencia, cancelación lógica de respuestas antiguas y cambio de ruta.
-- useState: filtros, cantidades, carga y resultado del checkout.
-- useMemo: catálogo filtrado y datos derivados del carrito.
-- useRef: bloqueo de envíos duplicados mientras se guarda.
-- React reconcilia el Virtual DOM; se usan claves estables por ID y no hay manipulación manual del DOM para construir la UI.
-- React Router: `/`, `/category/:categoryId`, `/item/:itemId`, `/cart`, `/checkout`, ruta 404. Navegación sin recargar.
-- Validaciones: mínimo/máximo/entero en ItemCount, cantidad acumulada por stock, emails coincidentes, teléfono y campos requeridos. ItemCount desaparece al agregar.
-- Estados: loading, error, catálogo vacío, búsqueda sin resultados, producto inexistente, sin stock, carrito vacío, orden guardada.
-- Accesibilidad: etiquetas de controles, enlace para saltar al contenido, foco visible, mensajes de estado, navegación por teclado y estilos responsive.
-
-## Catálogo y procedencia
-
-Consulta: 16 de septiembre de 2026. La [categoría proporcionada](https://shop.weverse.io/es/shop/MXN/artists/2/categories/175) no expuso artículos en la consulta. Se incorporaron dos referencias verificadas en otras páginas oficiales:
-
-- [Official Light Stick Ver.4](https://shop.weverse.io/en/shop/USD/artists/2/sales/62838): nombre e imagen de Weverse.
-- [Proof · Standard Edition](https://shop.weverse.io/en/shop/USD/artists/2/sales/8601): nombre e imagen de Weverse.
-
-Las descripciones son breves paráfrasis. Todos los precios se expresan en dólares estadounidenses (USD). Light Stick (64 USD) y Proof (39.27 USD) toman los importes de las páginas consultadas; los otros cuatro precios son ilustrativos, sin conversión cambiaria. El stock es inventado y no representa disponibilidad oficial. Los otros cuatro productos son conceptos ficticios señalados en sus detalles. Las imágenes locales proceden de la carpeta `img` del proyecto entregado; no se afirma propiedad o licencia comercial. Las dos imágenes remotas requieren conexión y tienen fallback local.
-
-El carrito usa la clave `purple-cart-usd` para evitar recuperar importes antiguos en pesos. Las nuevas órdenes y las reglas de Firestore usan USD. Si ya se cargó un catálogo anterior en Firestore, sus precios deben actualizarse antes de activar ese modo: el script seed no sobrescribe documentos existentes.
-
-## Publicación y entrega
-
-La carpeta `bts-shop` tiene su propio repositorio Git independiente, en la rama `codex/bts-shop`. Trabaja desde esta carpeta para que Git no tome como raíz el directorio personal. Repositorio de entrega: https://github.com/AlexUrdiozola/entrega-final-tiendabts.
-
-Se incluye `firebase.json` con reescritura SPA para que funcionen enlaces directos al detalle, carrito y categorías en Firebase Hosting. Tras configurar tu cuenta puedes compilar y publicar con Firebase CLI. Para otro hosting, configura todas las rutas para servir `index.html`.
-
-El repositorio de entrega es público e incluye `package-lock.json`; `.env.local`, credenciales, `node_modules` y `dist` están excluidos de Git. Después de clonar, copia `.env.example` a `.env.local` y completa la configuración web de Firebase entregada por separado. El sitio todavía no está publicado en Hosting; la base de datos Firebase sí está configurada.
-
-## Pruebas
-
-`npm test` cubre acumulación y límites del carrito, eliminación, total de compra, stock insuficiente, cambios de precio, entradas inválidas de ItemCount y un recorrido de detalle a carrito y checkout demo. Estas pruebas usan modo demo explícito y no generan órdenes en la nube. La comprobación independiente de Firebase real está registrada en `firebase-verification.json` y `VERIFICACION.md`.
-
-Referencias técnicas: [transacciones Firestore](https://firebase.google.com/docs/firestore/manage-data/transactions), [BrowserRouter](https://reactrouter.com/api/declarative-routers/BrowserRouter).
+[Repositorio en GitHub](https://github.com/AlexUrdiozola/entrega-final-tiendabts)
