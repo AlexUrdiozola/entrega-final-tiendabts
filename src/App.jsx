@@ -15,7 +15,14 @@ export default function App() {
   }, [pathname]);
   return (
     <>
-      <a className="skip-link" href="#content">
+      <a
+        className="skip-link"
+        href="#content"
+        onClick={(event) => {
+          event.preventDefault();
+          document.getElementById("content")?.focus();
+        }}
+      >
         Saltar al contenido
       </a>
       <NavBar />

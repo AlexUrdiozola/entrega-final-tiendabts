@@ -1,6 +1,6 @@
 # Verificación de entrega
 
-Actualizado el 17 de septiembre de 2026.
+Actualizado el 18 de septiembre de 2026.
 
 - Compilación de producción con Vite 8.3.0: correcta.
 - Vitest: seis pruebas aprobadas, incluyendo el recorrido de compra.
@@ -16,4 +16,4 @@ Actualizado el 17 de septiembre de 2026.
 - La comprobación del 17 de septiembre se realizó sobre los servicios reales de la aplicación; no se repitió el recorrido visual completo del navegador con Firebase.
 - Repositorio de entrega: https://github.com/AlexUrdiozola/entrega-final-tiendabts (público).
 
-La conexión a Firebase está activa y verificada. El sitio sigue siendo local; no se publicó en Hosting. Las órdenes académicas no reservan ni descuentan stock en la nube, como se explica en README.md.
+La conexión a Firebase está activa y verificada. El frontend se publica en GitHub Pages: https://alexurdiozola.github.io/entrega-final-tiendabts/. Usa HashRouter y rutas de recursos adaptadas al subdirectorio del repositorio. Las seis pruebas locales pasaron después del cambio y la compilación de producción terminó correctamente. Las órdenes académicas no reservan ni descuentan stock en la nube, como se explica en README.md.

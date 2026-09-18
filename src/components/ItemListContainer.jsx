@@ -4,7 +4,7 @@ import { ArrowDown, Search, SlidersHorizontal, Sparkles } from "lucide-react";
 import { getProducts } from "../services/shop";
 import { categories } from "../data/products";
 import ItemList from "./ItemList";
-import { Loader } from "./common";
+import { Loader, assetUrl } from "./common";
 export default function ItemListContainer() {
   const { categoryId } = useParams();
   const [items, setItems] = useState([]);
@@ -64,9 +64,14 @@ export default function ItemListContainer() {
               <br />
               Encuentra tu próximo recuerdo favorito.
             </p>
-            <a className="button light" href="#catalog">
+            <button
+              className="button light"
+              onClick={() =>
+                document.getElementById("catalog")?.scrollIntoView()
+              }
+            >
               Explorar colección <ArrowDown size={17} />
-            </a>
+            </button>
             <div className="hero-bottom">
               <span>방탄소년단</span>
               <span>EST. 2013 · FOREVER WITH ARMY</span>
@@ -74,7 +79,7 @@ export default function ItemListContainer() {
           </div>
           <div className="hero-photo">
             <img
-              src="/img/bts-foto-2.webp"
+              src={assetUrl("/img/bts-foto-2.webp")}
               alt="Los siete integrantes de BTS"
             />
             <span className="photo-label">

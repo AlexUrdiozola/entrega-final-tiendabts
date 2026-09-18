@@ -4,7 +4,11 @@ Aplicación de e-commerce desarrollada con React JS para el proyecto final del c
 
 ## 🚀 Deploy
 
-Pendiente de publicación. La aplicación puede ejecutarse localmente siguiendo las instrucciones de instalación.
+Aplicación publicada en **[GitHub Pages](https://alexurdiozola.github.io/entrega-final-tiendabts/)**.
+
+La navegación usa `HashRouter` para permitir enlaces directos y recargas en GitHub Pages, por ejemplo `/#/cart`. El frontend se sirve desde la rama `gh-pages`; los productos y las órdenes se almacenan en Firebase.
+
+Para preparar una actualización de la publicación, compilar con `DEPLOY_BASE_PATH=/entrega-final-tiendabts/` y la configuración de Firebase en `.env.local`, y publicar el contenido de `dist` en `gh-pages`. Los cambios en la rama de código fuente no actualizan por sí solos la versión publicada.
 
 ## 🛠️ Tecnologías utilizadas
 

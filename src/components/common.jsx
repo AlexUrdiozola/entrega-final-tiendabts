@@ -1,4 +1,8 @@
 import { Link } from "react-router-dom";
+export const assetUrl = (path) =>
+  path?.startsWith("/") && !path.startsWith("//")
+    ? `${import.meta.env.BASE_URL}${path.slice(1)}`
+    : path;
 export const money = (value) =>
   new Intl.NumberFormat("es-MX", {
     style: "currency",
@@ -28,11 +32,11 @@ export function ProductImage({ product, ...props }) {
   return (
     <img
       {...props}
-      src={product.image}
+      src={assetUrl(product.image)}
       alt={product.name}
       onError={(e) => {
         e.currentTarget.onerror = null;
-        e.currentTarget.src = "/img/bts_logo_(2017).png";
+        e.currentTarget.src = assetUrl("/img/bts_logo_(2017).png");
       }}
     />
   );

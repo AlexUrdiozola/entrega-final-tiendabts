@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 export default defineConfig({
+  base: process.env.DEPLOY_BASE_PATH || "/",
   resolve: { preserveSymlinks: true },
   build: {
     rolldownOptions: {
@@ -19,5 +20,9 @@ export default defineConfig({
     },
   },
   plugins: [react()],
-  test: { environment: "jsdom", setupFiles: ["./tests/setup.js"], env: { VITE_DATA_MODE: "demo" } },
+  test: {
+    environment: "jsdom",
+    setupFiles: ["./tests/setup.js"],
+    env: { VITE_DATA_MODE: "demo" },
+  },
 });
